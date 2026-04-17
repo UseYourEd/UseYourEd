@@ -17,6 +17,9 @@ import {
   Award
 } from "lucide-react";
 
+import logo from "./assets/logo.png";
+import edHeadshot from "./assets/ed-headshot.png";
+
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -38,7 +41,7 @@ export default function App() {
       <nav className="fixed top-0 w-full z-50 bg-brand-beige/80 backdrop-blur-md border-b border-brand-navy/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="UseYourEd Logo" className="h-10 w-auto" referrerPolicy="no-referrer" />
+            <img src={logo} alt="UseYourEd Logo" className="h-10 w-auto" referrerPolicy="no-referrer" />
             <div className="text-2xl font-serif font-semibold tracking-tight">
               UseYourEd<span className="text-brand-gold">.</span>
             </div>
@@ -95,7 +98,7 @@ export default function App() {
             >
               <div className="aspect-[4/5] rounded-[2rem] overflow-hidden bg-brand-navy border border-white/10 relative z-10 shadow-2xl">
                 <img 
-                  src="/ed-headshot.png" 
+                  src={edHeadshot} 
                   alt="Ed - UseYourEd" 
                   className="w-full h-full object-cover hover:scale-105 transition-all duration-700"
                   referrerPolicy="no-referrer"
@@ -169,7 +172,7 @@ export default function App() {
             <div className="order-1 md:order-2 relative">
               <div className="aspect-square rounded-2xl overflow-hidden border-8 border-brand-gold/10 shadow-2xl bg-white p-8 flex items-center justify-center">
                 <img 
-                  src="/logo.png" 
+                  src={logo} 
                   alt="UseYourEd Logo" 
                   className="max-w-full max-h-full object-contain"
                   referrerPolicy="no-referrer"
@@ -374,7 +377,7 @@ export default function App() {
       <footer className="py-12 px-6 border-t border-brand-navy/5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="UseYourEd Logo" className="h-8 w-auto opacity-50 grayscale hover:grayscale-0 transition-all" referrerPolicy="no-referrer" />
+            <img src={logo} alt="UseYourEd Logo" className="h-8 w-auto opacity-50 grayscale hover:grayscale-0 transition-all" referrerPolicy="no-referrer" />
             <div className="text-xl font-serif font-semibold">UseYourEd.</div>
           </div>
           <div className="text-sm text-brand-navy/40">
