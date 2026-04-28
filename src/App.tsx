@@ -4,6 +4,7 @@
  */
 
 import { motion } from "motion/react";
+import React from "react";
 import { 
   Briefcase, 
   Heart, 
@@ -35,6 +36,36 @@ const staggerContainer = {
 };
 
 export default function App() {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+    };
+    
+    try {
+      const response = await fetch('./send-email.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert("Thanks for your message! I'll get back to you soon.");
+        (e.target as HTMLFormElement).reset();
+      } else {
+        alert("Oops! Something went wrong. Please try again later.");
+      }
+    } catch (error) {
+      alert("Oops! Something went wrong. Please check your connection and try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen selection:bg-brand-gold selection:text-white">
       {/* Navigation */}
@@ -49,7 +80,7 @@ export default function App() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-widest">
             <a href="#about" className="hover:text-brand-gold transition-colors">About</a>
             <a href="#services" className="hover:text-brand-gold transition-colors">Services</a>
-            <a href="#contact" className="px-5 py-2 bg-brand-navy text-white rounded-full hover:bg-brand-gold transition-all">Get in Touch</a>
+            <a href="mailto:ed@useyoured.com" className="px-5 py-2 bg-brand-navy text-white rounded-full hover:bg-brand-gold transition-all">Get in Touch</a>
           </div>
         </div>
       </nav>
@@ -71,13 +102,16 @@ export default function App() {
                 <span className="italic text-brand-gold">Hand</span> for Growth.
               </h1>
               <p className="text-xl text-brand-navy/70 max-w-lg mb-10 leading-relaxed">
-                20+ years of experience helping local businesses, charities, and individuals build systems that achieve goals.
+                20+ years of experience helping independent businesses, charities, and individuals build systems that achieve goals.
               </p>
               <div className="flex flex-wrap gap-4">
-                <button className="px-8 py-4 bg-brand-navy text-white rounded-full font-medium flex items-center gap-2 hover:bg-brand-gold transition-all group">
+                <a 
+                  href="mailto:ed@useyoured.com"
+                  className="px-8 py-4 bg-brand-navy text-white rounded-full font-medium flex items-center gap-2 hover:bg-brand-gold transition-all group"
+                >
                   Start a Conversation
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+                </a>
                 <a 
                   href="https://www.linkedin.com/in/eddiehamilton/" 
                   target="_blank" 
@@ -295,9 +329,12 @@ export default function App() {
             School leaver, in Uni/College or a recent graduate? I offer <span className="text-brand-navy font-bold">3 hours of free 1-2-1 time</span>. 
             Life is getting tougher—don't be too proud to seek a wiser perspective.
           </p>
-          <button className="px-10 py-5 bg-brand-gold text-white rounded-full font-bold uppercase tracking-widest hover:shadow-lg hover:-translate-y-1 transition-all">
+          <a 
+            href="mailto:ed@useyoured.com?subject=Mentoring%20Session"
+            className="inline-block px-10 py-5 bg-brand-gold text-white rounded-full font-bold uppercase tracking-widest hover:shadow-lg hover:-translate-y-1 transition-all"
+          >
             Claim Your Free Session
-          </button>
+          </a>
         </div>
       </section>
 
@@ -337,20 +374,20 @@ export default function App() {
                 </div>
               </div>
               <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleFormSubmit}>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-xs font-bold uppercase tracking-widest text-white/50">Name</label>
-                      <input type="text" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors" />
+                      <input name="name" type="text" required className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs font-bold uppercase tracking-widest text-white/50">Email</label>
-                      <input type="email" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors" />
+                      <input name="email" type="email" required className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-widest text-white/50">How can I help?</label>
-                    <select className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors appearance-none">
+                    <select name="subject" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors appearance-none">
                       <option className="bg-brand-navy">Business Support</option>
                       <option className="bg-brand-navy">Charity Support</option>
                       <option className="bg-brand-navy">Personal Mentoring</option>
@@ -359,9 +396,9 @@ export default function App() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-widest text-white/50">Message</label>
-                    <textarea rows={4} className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors resize-none"></textarea>
+                    <textarea name="message" required rows={4} className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors resize-none"></textarea>
                   </div>
-                  <button className="w-full py-5 bg-brand-gold text-white rounded-xl font-bold uppercase tracking-widest hover:bg-brand-gold/80 transition-all">
+                  <button type="submit" className="w-full py-5 bg-brand-gold text-white rounded-xl font-bold uppercase tracking-widest hover:bg-brand-gold/80 transition-all">
                     Send Message
                   </button>
                 </form>
